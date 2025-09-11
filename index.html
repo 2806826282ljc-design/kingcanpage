@@ -13,6 +13,7 @@
             height: 100vh;
             margin: 0;
             background-color: #f5f5f5;
+            overflow: hidden;
         }
         .greeting {
             font-size: 3rem;
@@ -28,9 +29,241 @@
             from { opacity: 0; transform: translateY(-20px); }
             to { opacity: 1; transform: translateY(0); }
         }
+        
+        /* 弹窗样式 */
+        .modal {
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            background-color: white;
+            padding: 30px;
+            border-radius: 15px;
+            box-shadow: 0 5px 20px rgba(0, 0, 0, 0.2);
+            z-index: 100;
+            width: 350px;
+            text-align: center;
+            transition: all 0.3s ease;
+        }
+        
+        .modal-content {
+            margin-bottom: 25px;
+        }
+        
+        .modal h2 {
+            color: #ff4081;
+            font-size: 24px;
+            margin-bottom: 20px;
+        }
+        
+        .btn-container {
+            display: flex;
+            justify-content: space-around;
+        }
+        
+        .btn {
+            padding: 10px 25px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 16px;
+            font-weight: bold;
+            transition: all 0.3s;
+        }
+        
+        .btn-agree {
+            background-color: #4CAF50;
+            color: white;
+        }
+        
+        .btn-agree:hover {
+            background-color: #45a049;
+            transform: scale(1.05);
+        }
+        
+        .btn-refuse {
+            background-color: #f44336;
+            color: white;
+        }
+        
+        .btn-refuse:hover {
+            background-color: #d32f2f;
+        }
+        
+        /* 遮罩层 */
+        .overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.5);
+            z-index: 99;
+        }
+        
+        /* 爱心样式 */
+        .heart {
+            position: absolute;
+            width: 30px;
+            height: 30px;
+            background-color: #ff4081;
+            transform: rotate(45deg);
+            animation: heartFloat 4s ease-in-out infinite;
+            opacity: 0;
+        }
+        
+        .heart:before,
+        .heart:after {
+            content: "";
+            width: 30px;
+            height: 30px;
+            background-color: #ff4081;
+            border-radius: 50%;
+            position: absolute;
+        }
+        
+        .heart:before {
+            top: -15px;
+            left: 0;
+        }
+        
+        .heart:after {
+            top: 0;
+            left: -15px;
+        }
+        
+        @keyframes heartFloat {
+            0% { transform: rotate(45deg) translateY(0) scale(0.3); opacity: 0; }
+            50% { opacity: 0.8; }
+            100% { transform: rotate(45deg) translateY(-100vh) scale(1); opacity: 0; }
+        }
+        
+        /* 烟花样式 */
+        .firework {
+            position: absolute;
+            width: 5px;
+            height: 5px;
+            border-radius: 50%;
+            animation: explode 1s ease-out forwards;
+        }
+        
+        @keyframes explode {
+            0% { transform: translateY(0); opacity: 1; }
+            100% { transform: translateY(-100px) scale(20); opacity: 0; }
+        }
+        
+        /* 隐藏原始问候 */
+        .hidden {
+            display: none;
+        }
     </style>
 </head>
 <body>
     <div class="greeting">你好呀舒婷</div>
+    
+    <div class="overlay" id="overlay"></div>
+    <div class="modal" id="proposal-modal">
+        <div class="modal-content">
+            <h2>舒婷宝贝，你愿意当我的女朋友吗？</h2>
+        </div>
+        <div class="btn-container">
+            <button class="btn btn-agree" id="agree-btn">同意</button>
+            <button class="btn btn-refuse" id="refuse-btn">拒绝</button>
+        </div>
+    </div>
+
+    <script>
+        // 页面加载完成后显示弹窗
+        document.addEventListener('DOMContentLoaded', function() {
+            // 隐藏原始问候
+            document.querySelector('.greeting').classList.add('hidden');
+            
+            const modal = document.getElementById('proposal-modal');
+            const refuseBtn = document.getElementById('refuse-btn');
+            const agreeBtn = document.getElementById('agree-btn');
+            
+            // 拒绝按钮移动逻辑
+            refuseBtn.addEventListener('mouseover', function() {
+                // 随机位置
+                const x = Math.random() * (window.innerWidth - 350);
+                const y = Math.random() * (window.innerHeight - 200);
+                
+                modal.style.left = x + 'px';
+                modal.style.top = y + 'px';
+                // 取消transform，因为我们使用了绝对定位
+                modal.style.transform = 'none';
+            });
+            
+            // 同意按钮点击事件
+            agreeBtn.addEventListener('click', function() {
+                // 隐藏弹窗和遮罩
+                modal.style.display = 'none';
+                document.getElementById('overlay').style.display = 'none';
+                
+                // 显示原始问候
+                document.querySelector('.greeting').classList.remove('hidden');
+                document.querySelector('.greeting').textContent = '谢谢宝贝儿～！❤️';
+                
+                // 创建烟花和爱心特效
+                createFireworks();
+                createHearts();
+            });
+        });
+        
+        // 创建烟花特效
+        function createFireworks() {
+            for (let i = 0; i < 50; i++) {
+                setTimeout(() => {
+                    const firework = document.createElement('div');
+                    firework.classList.add('firework');
+                    
+                    // 随机位置和颜色
+                    const x = Math.random() * window.innerWidth;
+                    const y = Math.random() * window.innerHeight;
+                    const colors = ['#ff4081', '#3f51b5', '#4CAF50', '#FFC107', '#9C27B0', '#00BCD4'];
+                    const color = colors[Math.floor(Math.random() * colors.length)];
+                    
+                    firework.style.left = x + 'px';
+                    firework.style.top = y + 'px';
+                    firework.style.backgroundColor = color;
+                    
+                    document.body.appendChild(firework);
+                    
+                    // 移除烟花元素
+                    setTimeout(() => {
+                        firework.remove();
+                    }, 1000);
+                }, i * 50);
+            }
+        }
+        
+        // 创建爱心特效
+        function createHearts() {
+            for (let i = 0; i < 30; i++) {
+                setTimeout(() => {
+                    const heart = document.createElement('div');
+                    heart.classList.add('heart');
+                    
+                    // 随机位置
+                    const x = Math.random() * window.innerWidth;
+                    const y = window.innerHeight;
+                    
+                    heart.style.left = x + 'px';
+                    heart.style.top = y + 'px';
+                    
+                    // 随机动画时间
+                    const duration = 3 + Math.random() * 3;
+                    heart.style.animationDuration = duration + 's';
+                    
+                    document.body.appendChild(heart);
+                    
+                    // 移除爱心元素
+                    setTimeout(() => {
+                        heart.remove();
+                    }, duration * 1000);
+                }, i * 300);
+            }
+        }
+    </script>
 </body>
 </html>
