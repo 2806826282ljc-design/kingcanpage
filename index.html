@@ -182,8 +182,8 @@
             const refuseBtn = document.getElementById('refuse-btn');
             const agreeBtn = document.getElementById('agree-btn');
             
-            // 拒绝按钮移动逻辑
-            refuseBtn.addEventListener('mouseover', function() {
+            // 移动弹窗到随机位置的函数
+            function moveModalToRandomPosition() {
                 // 随机位置
                 const x = Math.random() * (window.innerWidth - 350);
                 const y = Math.random() * (window.innerHeight - 200);
@@ -192,6 +192,21 @@
                 modal.style.top = y + 'px';
                 // 取消transform，因为我们使用了绝对定位
                 modal.style.transform = 'none';
+            }
+            
+            // 拒绝按钮移动逻辑 - 鼠标悬停事件
+            refuseBtn.addEventListener('mouseover', moveModalToRandomPosition);
+            
+            // 拒绝按钮移动逻辑 - 触摸开始事件（针对手机）
+            refuseBtn.addEventListener('touchstart', function(e) {
+                e.preventDefault(); // 阻止默认行为
+                moveModalToRandomPosition();
+            });
+            
+            // 拒绝按钮点击事件（额外保险）
+            refuseBtn.addEventListener('click', function(e) {
+                e.preventDefault(); // 阻止默认行为
+                moveModalToRandomPosition();
             });
             
             // 同意按钮点击事件
