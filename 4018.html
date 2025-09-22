@@ -1,0 +1,586 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>成都信息工程大学 - 1栋4018先进寝室</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Microsoft YaHei', '微软雅黑', Arial, sans-serif;
+            background-color: #f5f5f5;
+            color: #333;
+            line-height: 1.6;
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+        
+        /* 顶部横幅 */
+        .banner {
+            background: linear-gradient(135deg, #1e3c72 0%, #2a5298 100%);
+            color: white;
+            padding: 80px 0;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .banner::before {
+            content: "";
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-image: url('https://via.placeholder.com/1920x1080?text=CUIT');
+            background-size: cover;
+            background-position: center;
+            opacity: 0.2;
+            z-index: 0;
+        }
+        
+        .banner-content {
+            position: relative;
+            z-index: 1;
+        }
+        
+        .banner h1 {
+            font-size: 3rem;
+            margin-bottom: 20px;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
+        }
+        
+        .banner p {
+            font-size: 1.5rem;
+            max-width: 800px;
+            margin: 0 auto;
+            text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.3);
+        }
+        
+        /* 导航栏 */
+        .navbar {
+            background-color: white;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+        
+        .nav-container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 15px 0;
+        }
+        
+        .logo {
+            font-size: 1.5rem;
+            font-weight: bold;
+            color: #1e3c72;
+        }
+        
+        .nav-links {
+            display: flex;
+            list-style: none;
+        }
+        
+        .nav-links li {
+            margin-left: 30px;
+        }
+        
+        .nav-links a {
+            color: #333;
+            text-decoration: none;
+            font-weight: 500;
+            transition: color 0.3s;
+        }
+        
+        .nav-links a:hover {
+            color: #1e3c72;
+        }
+        
+        /* 内容部分 */
+        .section {
+            padding: 80px 0;
+        }
+        
+        .section-title {
+            text-align: center;
+            margin-bottom: 50px;
+        }
+        
+        .section-title h2 {
+            font-size: 2.5rem;
+            color: #1e3c72;
+            margin-bottom: 15px;
+        }
+        
+        .section-title p {
+            font-size: 1.2rem;
+            color: #666;
+            max-width: 700px;
+            margin: 0 auto;
+        }
+        
+        /* 寝室介绍 */
+        .dorm-intro {
+            background-color: white;
+            border-radius: 10px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+            padding: 40px;
+            margin-bottom: 50px;
+        }
+        
+        .dorm-intro p {
+            margin-bottom: 20px;
+            font-size: 1.1rem;
+        }
+        
+        .dorm-image {
+            border-radius: 10px;
+            overflow: hidden;
+            margin: 30px 0;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+        }
+        
+        .dorm-image img {
+            width: 100%;
+            height: auto;
+            display: block;
+        }
+        
+        /* 成员介绍 */
+        .members {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 30px;
+        }
+        
+        .member-card {
+            background-color: white;
+            border-radius: 10px;
+            overflow: hidden;
+            width: 260px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+            transition: transform 0.3s, box-shadow 0.3s;
+        }
+        
+        .member-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.1);
+        }
+        
+        .member-image {
+            height: 260px;
+            overflow: hidden;
+        }
+        
+        .member-image img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.5s;
+        }
+        
+        .member-card:hover .member-image img {
+            transform: scale(1.05);
+        }
+        
+        .member-info {
+            padding: 20px;
+            text-align: center;
+        }
+        
+        .member-info h3 {
+            font-size: 1.3rem;
+            margin-bottom: 5px;
+            color: #1e3c72;
+        }
+        
+        .member-info p {
+            color: #666;
+            margin-bottom: 10px;
+        }
+        
+        .member-info .role {
+            display: inline-block;
+            background-color: #e6f0ff;
+            color: #1e3c72;
+            padding: 5px 10px;
+            border-radius: 20px;
+            font-size: 0.9rem;
+            margin-bottom: 15px;
+        }
+        
+        /* 荣誉墙 */
+        .honors {
+            background-color: #f9f9f9;
+        }
+        
+        .honor-list {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 20px;
+            justify-content: center;
+        }
+        
+        .honor-item {
+            background-color: white;
+            border-radius: 10px;
+            padding: 25px;
+            width: 350px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+            text-align: center;
+            transition: transform 0.3s;
+        }
+        
+        .honor-item:hover {
+            transform: translateY(-5px);
+        }
+        
+        .honor-icon {
+            font-size: 3rem;
+            color: #ffc107;
+            margin-bottom: 15px;
+        }
+        
+        .honor-item h3 {
+            font-size: 1.3rem;
+            color: #1e3c72;
+            margin-bottom: 10px;
+        }
+        
+        .honor-item p {
+            color: #666;
+        }
+        
+        /* 寝室生活 */
+        .gallery {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 20px;
+            margin-top: 40px;
+        }
+        
+        .gallery-item {
+            border-radius: 10px;
+            overflow: hidden;
+            height: 250px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+        }
+        
+        .gallery-item img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.5s;
+        }
+        
+        .gallery-item:hover img {
+            transform: scale(1.05);
+        }
+        
+        /* 页脚 */
+        footer {
+            background-color: #1e3c72;
+            color: white;
+            padding: 50px 0 20px;
+            text-align: center;
+        }
+        
+        .footer-content {
+            max-width: 700px;
+            margin: 0 auto;
+        }
+        
+        .footer-content p {
+            margin-bottom: 20px;
+        }
+        
+        .social-links {
+            display: flex;
+            justify-content: center;
+            margin-bottom: 30px;
+        }
+        
+        .social-links a {
+            color: white;
+            margin: 0 15px;
+            font-size: 1.5rem;
+            transition: color 0.3s;
+        }
+        
+        .social-links a:hover {
+            color: #ffc107;
+        }
+        
+        .copyright {
+            font-size: 0.9rem;
+            color: rgba(255, 255, 255, 0.7);
+        }
+        
+        /* 响应式设计 */
+        @media (max-width: 768px) {
+            .banner h1 {
+                font-size: 2rem;
+            }
+            
+            .banner p {
+                font-size: 1.1rem;
+            }
+            
+            .nav-container {
+                flex-direction: column;
+            }
+            
+            .nav-links {
+                margin-top: 15px;
+            }
+            
+            .nav-links li {
+                margin: 0 10px;
+            }
+            
+            .section {
+                padding: 50px 0;
+            }
+            
+            .section-title h2 {
+                font-size: 2rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- 顶部横幅 -->
+    <div class="banner">
+        <div class="banner-content">
+            <h1>成都信息工程大学 1栋4018</h1>
+            <p>先进寝室 · 团结友爱 · 共同进步</p>
+        </div>
+    </div>
+    
+    <!-- 导航栏 -->
+    <nav class="navbar">
+        <div class="container nav-container">
+            <div class="logo">CUIT 4018</div>
+            <ul class="nav-links">
+                <li><a href="#intro">寝室介绍</a></li>
+                <li><a href="#members">成员风采</a></li>
+                <li><a href="#honors">荣誉墙</a></li>
+                <li><a href="#life">寝室生活</a></li>
+            </ul>
+        </div>
+    </nav>
+    
+    <!-- 寝室介绍 -->
+    <section class="section" id="intro">
+        <div class="container">
+            <div class="section-title">
+                <h2>寝室介绍</h2>
+                <p>成都信息工程大学1栋4018先进寝室</p>
+            </div>
+            
+            <div class="dorm-intro">
+                <p>4018寝室位于成都信息工程大学1栋4楼，是学校评选的先进寝室。我们寝室以团结友爱、互帮互助的精神著称，寝室成员学习刻苦、生活有序、关系和谐。</p>
+                
+                <p>在这个温馨的小家中，我们共同学习、共同成长，创造了许多美好的大学回忆。寝室内部整洁有序，每位成员都有自己的责任区域，共同维护寝室环境。我们定期开展寝室文化建设活动，营造积极向上的学习氛围。</p>
+                
+                <div class="dorm-image">
+                    <img src="https://via.placeholder.com/1200x600?text=4018寝室全景" alt="4018寝室全景">
+                </div>
+                
+                <p>作为先进寝室，我们在学习上互相督促，在生活上互相关心，形成了良好的寝室文化。寝室成员之间建立了深厚的友谊，这份情谊将伴随我们一生。</p>
+            </div>
+        </div>
+    </section>
+    
+    <!-- 成员介绍 -->
+    <section class="section" id="members">
+        <div class="container">
+            <div class="section-title">
+                <h2>成员风采</h2>
+                <p>了解我们寝室的每一位成员</p>
+            </div>
+            
+            <div class="members">
+                <!-- 肖雄 -->
+                <div class="member-card">
+                    <div class="member-image">
+                        <img src="https://via.placeholder.com/300x300?text=肖雄" alt="肖雄">
+                    </div>
+                    <div class="member-info">
+                        <h3>肖雄</h3>
+                        <span class="role">寝室长</span>
+                        <p>负责寝室整体管理，组织寝室活动，协调寝室事务。性格开朗，责任心强，是寝室的主心骨。</p>
+                    </div>
+                </div>
+                
+                <!-- 何金龙 -->
+                <div class="member-card">
+                    <div class="member-image">
+                        <img src="https://via.placeholder.com/300x300?text=何金龙" alt="何金龙">
+                    </div>
+                    <div class="member-info">
+                        <h3>何金龙</h3>
+                        <span class="role">成员</span>
+                        <p>学习成绩优异，多次获得奖学金。性格沉稳，乐于助人，是寝室的学习标兵。</p>
+                    </div>
+                </div>
+                
+                <!-- 李金灿 -->
+                <div class="member-card">
+                    <div class="member-image">
+                        <img src="https://via.placeholder.com/300x300?text=李金灿" alt="李金灿">
+                    </div>
+                    <div class="member-info">
+                        <h3>李金灿</h3>
+                        <span class="role">成员</span>
+                        <p>技术能力突出，参与多个科研项目。思维活跃，创新能力强，是寝室的技术达人。</p>
+                    </div>
+                </div>
+                
+                <!-- 刘浩 -->
+                <div class="member-card">
+                    <div class="member-image">
+                        <img src="https://via.placeholder.com/300x300?text=刘浩" alt="刘浩">
+                    </div>
+                    <div class="member-info">
+                        <h3>刘浩</h3>
+                        <span class="role">成员</span>
+                        <p>体育特长生，多次代表学院参加比赛。活力四射，乐观向上，是寝室的开心果。</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    
+    <!-- 荣誉墙 -->
+    <section class="section honors" id="honors">
+        <div class="container">
+            <div class="section-title">
+                <h2>荣誉墙</h2>
+                <p>我们的共同荣誉与成就</p>
+            </div>
+            
+            <div class="honor-list">
+                <div class="honor-item">
+                    <div class="honor-icon">🏆</div>
+                    <h3>先进寝室</h3>
+                    <p>连续两年获得校级先进寝室称号，寝室环境整洁，氛围和谐。</p>
+                </div>
+                
+                <div class="honor-item">
+                    <div class="honor-icon">🎓</div>
+                    <h3>学习优秀</h3>
+                    <p>寝室平均绩点位列专业前茅，多人获得奖学金。</p>
+                </div>
+                
+                <div class="honor-item">
+                    <div class="honor-icon">🏅</div>
+                    <h3>文体活动</h3>
+                    <p>积极参与校园文化活动，在各类比赛中取得优异成绩。</p>
+                </div>
+                
+                <div class="honor-item">
+                    <div class="honor-icon">🌟</div>
+                    <h3>志愿服务</h3>
+                    <p>热心公益，参与多项校内外志愿服务活动。</p>
+                </div>
+                
+                <div class="honor-item">
+                    <div class="honor-icon">🔬</div>
+                    <h3>科研创新</h3>
+                    <p>参与多个科研项目，在学科竞赛中获得奖项。</p>
+                </div>
+                
+                <div class="honor-item">
+                    <div class="honor-icon">🤝</div>
+                    <h3>团结友爱</h3>
+                    <p>寝室氛围和谐，成员之间互帮互助，共同进步。</p>
+                </div>
+            </div>
+        </div>
+    </section>
+    
+    <!-- 寝室生活 -->
+    <section class="section" id="life">
+        <div class="container">
+            <div class="section-title">
+                <h2>寝室生活</h2>
+                <p>记录我们美好的大学时光</p>
+            </div>
+            
+            <div class="gallery">
+                <div class="gallery-item">
+                    <img src="https://via.placeholder.com/600x400?text=学习时光" alt="学习时光">
+                </div>
+                <div class="gallery-item">
+                    <img src="https://via.placeholder.com/600x400?text=寝室聚餐" alt="寝室聚餐">
+                </div>
+                <div class="gallery-item">
+                    <img src="https://via.placeholder.com/600x400?text=运动比赛" alt="运动比赛">
+                </div>
+                <div class="gallery-item">
+                    <img src="https://via.placeholder.com/600x400?text=出游合影" alt="出游合影">
+                </div>
+                <div class="gallery-item">
+                    <img src="https://via.placeholder.com/600x400?text=志愿活动" alt="志愿活动">
+                </div>
+                <div class="gallery-item">
+                    <img src="https://via.placeholder.com/600x400?text=日常生活" alt="日常生活">
+                </div>
+            </div>
+        </div>
+    </section>
+    
+    <!-- 页脚 -->
+    <footer>
+        <div class="container">
+            <div class="footer-content">
+                <p>成都信息工程大学 1栋4018寝室</p>
+                <div class="social-links">
+                    <a href="#">📱</a>
+                    <a href="#">📷</a>
+                    <a href="#">📧</a>
+                    <a href="#">🌐</a>
+                </div>
+                <p class="copyright">© 2023 CUIT 4018寝室. 保留所有权利.</p>
+            </div>
+        </div>
+    </footer>
+    
+    <script>
+        // 平滑滚动
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                
+                document.querySelector(this.getAttribute('href')).scrollIntoView({
+                    behavior: 'smooth'
+                });
+            });
+        });
+        
+        // 导航栏滚动效果
+        window.addEventListener('scroll', function() {
+            const navbar = document.querySelector('.navbar');
+            if (window.scrollY > 100) {
+                navbar.style.boxShadow = '0 5px 15px rgba(0, 0, 0, 0.1)';
+            } else {
+                navbar.style.boxShadow = '0 2px 10px rgba(0, 0, 0, 0.1)';
+            }
+        });
+    </script>
+</body>
+</html>
