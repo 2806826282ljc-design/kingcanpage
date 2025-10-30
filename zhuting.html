@@ -1,0 +1,233 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>暖心小弹框</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Microsoft YaHei', sans-serif;
+            background-color: #f5f5f5;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            overflow: hidden;
+            position: relative;
+            background-image: linear-gradient(to bottom right, #fce4ec, #e1f5fe);
+        }
+        
+        .welcome {
+            text-align: center;
+            margin-bottom: 20px;
+            z-index: 1;
+        }
+        
+        .welcome h1 {
+            font-size: 2.5rem;
+            color: #333;
+            margin-bottom: 10px;
+            text-shadow: 1px 1px 3px rgba(0,0,0,0.1);
+        }
+        
+        .welcome p {
+            font-size: 1.2rem;
+            color: #666;
+        }
+        
+        .message-box {
+            position: absolute;
+            padding: 15px 20px;
+            border-radius: 10px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+            font-size: 1rem;
+            max-width: 300px;
+            opacity: 0;
+            transform: scale(0.8);
+            transition: all 0.5s ease;
+            z-index: 10;
+            text-align: center;
+            cursor: pointer;
+        }
+        
+        .message-box.show {
+            opacity: 1;
+            transform: scale(1);
+        }
+        
+        .message-box:hover {
+            transform: scale(1.05);
+            box-shadow: 0 6px 20px rgba(0,0,0,0.15);
+        }
+        
+        .heart {
+            position: absolute;
+            font-size: 20px;
+            animation: float 4s ease-in-out infinite;
+            opacity: 0.7;
+            z-index: 0;
+        }
+        
+        @keyframes float {
+            0% {
+                transform: translateY(0) rotate(0deg);
+                opacity: 0.7;
+            }
+            50% {
+                transform: translateY(-20px) rotate(10deg);
+                opacity: 0.9;
+            }
+            100% {
+                transform: translateY(0) rotate(0deg);
+                opacity: 0.7;
+            }
+        }
+        
+        @media (max-width: 768px) {
+            .welcome h1 {
+                font-size: 2rem;
+            }
+            
+            .welcome p {
+                font-size: 1rem;
+            }
+            
+            .message-box {
+                max-width: 250px;
+                font-size: 0.9rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="welcome">
+        <h1>舒婷宝贝</h1>
+        <p>你好呀</p>
+    </div>
+    
+    <script>
+        // 暖心消息数组
+        const messages = [
+            "你今天的笑容真美，继续保持！",
+            "无论遇到什么困难，记住你并不孤单。",
+            "相信自己，你比想象中更加坚强！",
+            "每一个清晨都是新的开始，充满可能性。",
+            "你的努力终将有回报，请坚持下去。",
+            "生活中的小确幸，希望你都能感受到。",
+            "愿你的每一天都被温暖和爱包围。",
+            "不要忘记照顾好自己，你值得最好的。",
+            "即使是最小的进步，也值得庆祝。",
+            "你的存在本身就是一种美好。",
+            "今天也要加油，明天会更好！",
+            "别忘了对自己说声辛苦了。",
+            "你的善良和坚持，一直都被看见。",
+            "愿你所有的付出都能得到回报。",
+            "记得给自己一些放松的时间。",
+            "你的梦想值得被追求，不要轻言放弃。",
+            "世界因为有你而更加美好。",
+            "每一次跌倒后，都要勇敢站起来。",
+            "愿你的心情如阳光般明媚。",
+            "你的潜力是无限的，相信自己！",
+            "给婷宝贝请安了。",
+            "在干嘛呀",
+            "吃饭了吗",
+            "你好呀"
+        ];
+        
+        // 背景颜色数组
+        const colors = [
+            "#ffcdd2", "#f8bbd0", "#e1bee7", "#d1c4e9", "#c5cae9",
+            "#bbdefb", "#b3e5fc", "#b2ebf2", "#b2dfdb", "#c8e6c9",
+            "#dcedc8", "#f0f4c3", "#fff9c4", "#ffecb3", "#ffe0b2",
+            "#ffccbc", "#d7ccc8", "#f5f5f5", "#cfd8dc"
+        ];
+        
+        // 创建背景爱心
+        function createBackgroundHearts() {
+            for (let i = 0; i < 20; i++) {
+                const heart = document.createElement('div');
+                heart.classList.add('heart');
+                heart.innerHTML = '❤';
+                heart.style.color = colors[Math.floor(Math.random() * colors.length)];
+                heart.style.left = `${Math.random() * 100}%`;
+                heart.style.top = `${Math.random() * 100}%`;
+                heart.style.animationDelay = `${Math.random() * 5}s`;
+                heart.style.fontSize = `${Math.random() * 20 + 10}px`;
+                document.body.appendChild(heart);
+            }
+        }
+        
+        // 创建一个弹框
+        function createMessageBox() {
+            // 如果已经有超过10个弹框，则不再创建新的
+            if (document.querySelectorAll('.message-box').length >= 30) return;
+            
+            const box = document.createElement('div');
+            box.classList.add('message-box');
+            
+            // 随机消息
+            const messageIndex = Math.floor(Math.random() * messages.length);
+            box.textContent = messages[messageIndex];
+            
+            // 随机位置
+            const maxX = window.innerWidth - 300;
+            const maxY = window.innerHeight - 100;
+            const posX = Math.max(50, Math.floor(Math.random() * maxX));
+            const posY = Math.max(50, Math.floor(Math.random() * maxY));
+            
+            box.style.left = `${posX}px`;
+            box.style.top = `${posY}px`;
+            
+            // 随机背景颜色
+            const colorIndex = Math.floor(Math.random() * colors.length);
+            box.style.backgroundColor = colors[colorIndex];
+            
+            // 根据背景颜色设置文字颜色
+            box.style.color = '#333';
+            
+            // 添加到页面
+            document.body.appendChild(box);
+            
+            // 添加点击事件，点击后关闭弹框
+            box.addEventListener('click', function() {
+                box.style.opacity = '0';
+                box.style.transform = 'scale(0.8)';
+                setTimeout(() => {
+                    box.remove();
+                    // 移除后创建一个新的
+                    setTimeout(createMessageBox, Math.random() * 1000 + 500);
+                }, 500);
+            });
+            
+            // 延迟显示动画
+            setTimeout(() => {
+                box.classList.add('show');
+            }, 100);
+        }
+        
+        // 页面加载完成后开始创建弹框
+        window.addEventListener('DOMContentLoaded', () => {
+            createBackgroundHearts();
+            
+            // 初始创建几个弹框，间隔出现
+            for (let i = 0; i < 1; i++) {
+                setTimeout(() => {
+                    createMessageBox();
+                }, i * 1000);
+            }
+            
+            // 每隔一段时间创建新的弹框
+            setInterval(() => {
+                createMessageBox();
+            }, 1000);
+        });
+    </script>
+</body>
+</html>
